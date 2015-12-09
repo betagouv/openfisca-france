@@ -191,8 +191,7 @@ class aah_non_calculable(Variable):
         taux_incapacite = simulation.calculate('taux_incapacite', period)
         aah_eligible = simulation.calculate('aah_eligible', period)
 
-        # Pour le moment résultat "pas assez fiable, donc on renvoit une non calculabilité tout le temps.
-        return period, self.any_by_roles(aah_eligible) # * (taux_incapacite < 0.8)
+        return period, self.any_by_roles(aah_eligible * (taux_incapacite < 0.8))
 
 
 class aah_base(Variable):
