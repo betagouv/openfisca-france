@@ -52,6 +52,7 @@ class assiette_cotisations_sociales_prive(Variable):
         indemnite_residence = simulation.calculate('indemnite_residence', period)
         primes_fonction_publique = simulation.calculate('primes_fonction_publique', period)
         primes_salaires = simulation.calculate('primes_salaires', period)
+        indemnite_fin_contrat = simulation.calculate('indemnite_fin_contrat', period)
         reintegration_titre_restaurant_employeur = simulation.calculate(
             "reintegration_titre_restaurant_employeur", period
             )
@@ -72,6 +73,21 @@ class assiette_cotisations_sociales_prive(Variable):
             )
         return period, max_(assiette, smic_proratise * not_(apprenti)) * (assiette > 0)
 
+class indemnite_fin_contrat(Variable):
+    column = FloatCol
+    entity_class = Individus
+    label = u"Indemnité de fin de contrat"
+    url = u"https://www.service-public.fr/particuliers/vosdroits/F40"
+
+    def function(self, simulation, period):
+        contrat_de_travail_duree = simulation.calculate('contrat_de_travail_duree', period)
+        salaire_de_base = simulation.calculate('salaire_de_base', period)
+        result = (
+            (contrat_de_travail_duree == 1) # CDD
+            * .1 # 10%
+            * salaire_de_base
+            )
+        return period, result
 
 class reintegration_titre_restaurant_employeur(Variable):
     column = FloatCol
