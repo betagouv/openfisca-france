@@ -12,7 +12,7 @@
       2016-01: 3100
   - id: "couple2"
     age: 45
-    chonet:
+    chomage_net:
       2016-01: 1400
   - id: "enfant1"
     age: 5
@@ -37,7 +37,7 @@
       2016-01: 3100
   - id: "couple2"
     age: 45
-    chonet:
+    chomage_net:
       2016-01: 1400
   - id: "enfant1"
     age: 5
@@ -62,7 +62,7 @@
       2016-01: 1100
   - id: "couple2"
     age: 55
-    chonet:
+    chomage_net:
       2016-01: 400
   - id: "enfant1"
     age: 5
@@ -83,7 +83,7 @@
       2016-01: 2100
   - id: "couple2"
     age: 55
-    chonet:
+    chomage_net:
       2016-01: 400
   - id: "enfant1"
     age: 5
@@ -106,7 +106,7 @@
       2016-01: 4100
   - id: "couple2"
     age: 55
-    chonet:
+    chomage_net:
       2016-01: 400
   - id: "enfant1"
     age: 5
@@ -132,7 +132,7 @@
       2016-01: 4100
   - id: "couple2"
     age: 55
-    chonet:
+    chomage_net:
       2016-01: 1400
   - id: "enfant1"
     age: 5
