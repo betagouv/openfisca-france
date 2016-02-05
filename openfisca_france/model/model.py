@@ -71,6 +71,7 @@ from prestations.prestations_locales.paris import (  # noqa analysis:ignore
     paris_logement_famille,
     paris_forfait_famille,
     paris_solidarite,
+    paris_energie_famille,
     )
 
 from revenus import autres
