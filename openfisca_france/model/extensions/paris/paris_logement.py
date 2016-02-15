@@ -3,7 +3,7 @@ from __future__ import division
 
 from numpy import (maximum as max_, logical_not as not_, absolute as abs_, minimum as min_, select, where)
 
-from ....base import *  # noqa analysis:ignore
+from ...base import *  # noqa analysis:ignore
 
 # Paris Logement pour les personnes agées et les personnes handicapées
 
