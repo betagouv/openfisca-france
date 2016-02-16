@@ -3,7 +3,7 @@ from __future__ import division
 
 from numpy import (maximum as max_, logical_not as not_, absolute as abs_, minimum as min_, select)
 
-from ...base import *  # noqa analysis:ignore
+from openfisca_france.model.base import *  # noqa analysis:ignore
 
 # Allocation de soutien aux parents d’enfants handicapés
 

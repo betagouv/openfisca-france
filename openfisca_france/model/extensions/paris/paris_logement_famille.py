@@ -3,7 +3,7 @@ from __future__ import division
 
 from numpy import absolute as abs_, minimum as min_, maximum as max_, where
 
-from ...base import *  # noqa analysis:ignore
+from openfisca_france.model.base import *  # noqa analysis:ignore
 
 class paris_logement_familles_elig(Variable):
     column = BoolCol
