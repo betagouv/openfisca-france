@@ -35,7 +35,7 @@ class assiette_allegement(Variable):
 class coefficient_proratisation(Variable):
     column = FloatCol
     entity_class = Individus
-    label = u"Coefficient de proratisation pour le calcul du SMIC et du plafond de la Sécurité socialele"
+    label = u"Coefficient de proratisation pour le calcul du SMIC et du plafond de la Sécurité sociale"
 
     def function(self, simulation, period):
         # u"temps_plein",
@@ -205,7 +205,7 @@ class allegement_fillon(DatedVariable):
                 allegement_mode_recouvrement,
                 self.__class__.__name__,
                 )
-                
+
         return period, allegement * not_(stagiaire) * not_(apprenti)
 
 
