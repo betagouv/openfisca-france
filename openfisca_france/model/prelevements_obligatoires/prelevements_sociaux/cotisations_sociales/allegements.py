@@ -184,7 +184,7 @@ class aide_premier_salarie(DatedVariable):
 class smic_proratise(Variable):
     column = FloatCol
     entity_class = Individus
-    label = u"SMIC proratisé"
+    label = u"SMIC proratisé (mensuel)"
 
     def function(self, simulation, period):
         period = period.this_month
