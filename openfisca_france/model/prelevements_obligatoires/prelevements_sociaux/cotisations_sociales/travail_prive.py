@@ -45,7 +45,6 @@ class assiette_cotisations_sociales_prive(Variable):
 
     def function(self, simulation, period):
         period = period.start.offset('first-of', 'month').period(u'month')
-        apprenti = simulation.calculate('apprenti', period)
         avantage_en_nature = simulation.calculate('avantage_en_nature', period)
         hsup = simulation.calculate('hsup', period)
         indemnites_compensatrices_conges_payes = simulation.calculate('indemnites_compensatrices_conges_payes', period)
@@ -58,7 +57,6 @@ class assiette_cotisations_sociales_prive(Variable):
         remuneration_apprenti = simulation.calculate('remuneration_apprenti', period)
         salaire_de_base = simulation.calculate('salaire_de_base', period)
         type_sal = simulation.calculate('type_sal', period)
-        smic_proratise = simulation.calculate('smic_proratise', period)
 
         assiette = (
             salaire_de_base +
@@ -70,7 +68,7 @@ class assiette_cotisations_sociales_prive(Variable):
             (type_sal == CAT['public_non_titulaire']) * (indemnite_residence + primes_fonction_publique) +
             reintegration_titre_restaurant_employeur
             )
-        return period, max_(assiette, smic_proratise * not_(apprenti)) * (assiette > 0)
+        return period, assiette * (assiette > 0)
 
 
 class reintegration_titre_restaurant_employeur(Variable):
