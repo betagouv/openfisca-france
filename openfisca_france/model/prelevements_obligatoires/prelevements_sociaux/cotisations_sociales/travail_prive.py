@@ -553,9 +553,12 @@ class plafond_securite_sociale(Variable):
         period = period.start.period(u'month').offset('first-of')
         heures_non_remunerees_volume = simulation.calculate('heures_non_remunerees_volume')
         nombre_jours_calendaires = simulation.calculate('nombre_jours_calendaires', period)
+        coefficient_proratisation = simulation.calculate('coefficient_proratisation', period)
         _P = simulation.legislation_at(period.start)
 
         plafond_temps_plein = _P.cotsoc.gen.plafond_securite_sociale
+        return period, plafond_temps_plein * coefficient_proratisation
+
         jours_travailles = nombre_jours_calendaires - heures_non_remunerees_volume / 7
         plafond_securite_sociale = min_(jours_travailles, 30) / 30 * plafond_temps_plein
         # TODO Fix months < 30 days, for example with:
