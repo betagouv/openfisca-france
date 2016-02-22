@@ -12,7 +12,7 @@
       2012: 15000
       2013: 15000
   output_variables:
-    salaire_de_base:
-      2013-01: 1250
-    rsa:
-      2013-01: 119.79
+    #salaire_de_base:
+    #  2013-01: 1250
+    #rsa:
+    #  2013-01: 119.79
