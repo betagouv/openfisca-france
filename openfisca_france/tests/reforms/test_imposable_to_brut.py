@@ -8,7 +8,7 @@ import datetime
 from openfisca_core import periods
 
 from openfisca_france.reforms import inversion_revenus
-from openfisca_france.model.base import CAT
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 from openfisca_france.tests.base import assert_near, tax_benefit_system
 
 
@@ -100,7 +100,7 @@ def check_sal(type_sal, year = 2014):
 
 def test_sal(year = 2014):
     for type_sal_category in ('prive_non_cadre', 'prive_cadre'):  # , 'public_titulaire_etat'):
-        yield check_sal, CAT[type_sal_category], year
+        yield check_sal, type_sal_enum [type_sal_category], year
 
 
 if __name__ == '__main__':

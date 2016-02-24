@@ -10,6 +10,7 @@ from numpy import int16, maximum as max_, minimum as min_, logical_not as not_
 
 from ....base import *  # noqa analysis:ignore
 from .base import apply_bareme, apply_bareme_for_relevant_type_sal
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 
 
 log = logging.getLogger(__name__)
@@ -67,7 +68,7 @@ class assiette_cotisations_sociales_prive(Variable):
             hsup +
             indemnites_compensatrices_conges_payes +
             remuneration_apprenti +
-            (type_sal == CAT['public_non_titulaire']) * (indemnite_residence + primes_fonction_publique) +
+            (type_sal == type_sal_enum ['public_non_titulaire']) * (indemnite_residence + primes_fonction_publique) +
             reintegration_titre_restaurant_employeur
             )
         return period, max_(assiette, smic_proratise * not_(apprenti)) * (assiette > 0)
@@ -582,7 +583,7 @@ class prevoyance_obligatoire_cadre(Variable):
             'prevoyance_obligatoire_cadre_taux_employeur', period)
 
         cotisation = - (
-            (type_sal == CAT['prive_cadre']) *
+            (type_sal == type_sal_enum ['prive_cadre']) *
             min_(assiette_cotisations_sociales, plafond_securite_sociale) *
             prevoyance_obligatoire_cadre_taux_employeur
             )

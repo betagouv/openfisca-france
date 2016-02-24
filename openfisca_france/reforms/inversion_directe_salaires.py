@@ -5,7 +5,7 @@ from __future__ import division
 # import logging
 
 from openfisca_core import columns, formulas, reforms
-from openfisca_france.model.base import CAT
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 from openfisca_core.taxscales import MarginalRateTaxScale
 
 from .. import entities
@@ -80,9 +80,9 @@ def build_reform(tax_benefit_system):
             prive_non_cadre.add_tax_scale(csg)
             prive_cadre.add_tax_scale(csg)
             salaire_de_base = (
-                (type_sal == CAT['prive_non_cadre']) *
+                (type_sal == type_sal_enum['prive_non_cadre']) *
                 prive_non_cadre.inverse().calc(salaire_imposable_pour_inversion) +
-                (type_sal == CAT['prive_cadre']) * prive_cadre.inverse().calc(salaire_imposable_pour_inversion)
+                (type_sal == type_sal_enum['prive_cadre']) * prive_cadre.inverse().calc(salaire_imposable_pour_inversion)
                 )
             return period, salaire_de_base + hsup
 
@@ -144,7 +144,7 @@ def build_reform(tax_benefit_system):
             bareme_prime.add_bracket(0, -TAUX_DE_PRIME)  # barème équivalent à taux_prime*TIB
             public_titulaire_etat.add_tax_scale(bareme_prime)
             traitement_indiciaire_brut = (
-                (type_sal == CAT['public_titulaire_etat']) *
+                (type_sal == type_sal_enum ['public_titulaire_etat']) *
                 public_titulaire_etat.inverse().calc(salaire_imposable_pour_inversion)
                 )
             # TODO: complete this to deal with the fonctionnaire

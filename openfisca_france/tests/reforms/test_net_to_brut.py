@@ -147,7 +147,7 @@ def test_salaire_net_to_salaire_de_base():
     salaire_de_base_max = 5000
     salaire_de_base_min = 0
     for year in range(2006, 2015):
-        for type_sal in [0, 1]:  # CAT._vars:   TODO: work on other categories of employee
+        for type_sal in [0, 1]:  # type_sal_enum._vars:   TODO: work on other categories of employee
             yield check_salaire_net_to_salaire_de_base, count, salaire_de_base_max, salaire_de_base_min, type_sal, year
 
 

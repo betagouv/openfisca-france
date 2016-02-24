@@ -4,7 +4,7 @@ from __future__ import division
 
 import datetime
 
-from openfisca_france.model.base import CAT
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 from openfisca_france.tests import base
 
 
@@ -15,7 +15,7 @@ scenarios_arguments = [
             birth = datetime.date(1972, 1, 1),
             salaire_de_base = 2000,
             effectif_entreprise = 25,
-            type_sal = CAT['prive_non_cadre'],
+            type_sal = type_sal_enum['prive_non_cadre'],
             ),
         menage = dict(
             zone_apl = 1,

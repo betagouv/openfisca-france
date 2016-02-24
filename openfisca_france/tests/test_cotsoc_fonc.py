@@ -4,7 +4,7 @@ from __future__ import division
 
 import datetime
 
-from ..model.base import CAT
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 from . import base
 
 
@@ -27,7 +27,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_etat'],
+                type_sal = type_sal_enum ['public_titulaire_etat'],
                 ),
             menage = dict(
                 zone_apl = 1,
@@ -84,7 +84,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_territoriale'],
+                type_sal = type_sal_enum ['public_titulaire_territoriale'],
                 ),
             menage = dict(
                 zone_apl = 1,
@@ -136,7 +136,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_hospitaliere'],
+                type_sal = type_sal_enum ['public_titulaire_hospitaliere'],
                 ),
             menage = dict(
                 zone_apl = 1,
@@ -191,7 +191,7 @@ def test():
                 primes_fonction_publique = 500,
                 salaire_de_base = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_non_titulaire'],
+                type_sal = type_sal_enum ['public_non_titulaire'],
                 ),
             menage = dict(
                 zone_apl = 1,
@@ -252,7 +252,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_etat'],
+                type_sal = type_sal_enum ['public_titulaire_etat'],
                 ),
             parent2 = dict(
                 birth = datetime.date(1972, 1, 1),
@@ -310,7 +310,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_etat'],
+                type_sal = type_sal_enum ['public_titulaire_etat'],
                 ),
             parent2 = dict(
                 birth = datetime.date(1972, 1, 1),
@@ -318,7 +318,7 @@ def test():
                 primes_fonction_publique = 500,
                 traitement_indiciaire_brut = 2000,
                 taille_entreprise = 3,  # TODO fix this
-                type_sal = CAT['public_titulaire_etat'],
+                type_sal = type_sal_enum ['public_titulaire_etat'],
                 ),
             enfants = [
                 dict(birth = datetime.date(2000, 1, 1)),

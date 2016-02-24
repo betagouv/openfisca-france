@@ -8,7 +8,7 @@ import datetime
 from openfisca_core import periods, taxscales
 
 from openfisca_france.reforms import inversion_directe_salaires
-from openfisca_france.model.base import CAT
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 from openfisca_france.tests.base import assert_near, tax_benefit_system
 
 TAUX_DE_PRIME = inversion_directe_salaires.TAUX_DE_PRIME
@@ -133,7 +133,7 @@ def check_inversion_directe_salaires(type_sal, year = 2014):
 
 def test_sal(year = 2014):
     for type_sal_category in ('public_titulaire_etat', ): # ('prive_cadre', 'prive_non_cadre'):
-        yield check_inversion_directe_salaires, CAT[type_sal_category], year
+        yield check_inversion_directe_salaires, type_sal_enum[type_sal_category], year
 
 
 if __name__ == '__main__':

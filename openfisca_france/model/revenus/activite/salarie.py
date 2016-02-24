@@ -352,19 +352,23 @@ class traitement_indiciaire_brut(Variable):
     entity_class = Individus
     label = u"Traitement indiciaire brut (TIB)"
 
+type_sal_enum = \
+    Enum(
+        [
+            u"prive_non_cadre",
+            u"prive_cadre",
+            u"public_titulaire_etat",
+            u"public_titulaire_militaire",
+            u"public_titulaire_territoriale",
+            u"public_titulaire_hospitaliere",
+            u"public_non_titulaire",
+            ],
+        )
+
+
 class type_sal(Variable):
     column = EnumCol(
-        enum = Enum(
-            [
-                u"prive_non_cadre",
-                u"prive_cadre",
-                u"public_titulaire_etat",
-                u"public_titulaire_militaire",
-                u"public_titulaire_territoriale",
-                u"public_titulaire_hospitaliere",
-                u"public_non_titulaire",
-                ],
-            ),
+        enum=type_sal_enum
         )
     entity_class = Individus
     label = u"Catégorie de salarié"
@@ -561,9 +565,9 @@ class primes_fonction_publique(Variable):
 
         traitement_indiciaire_brut = simulation.calculate('traitement_indiciaire_brut', period)
         public = (
-            (type_sal == CAT['public_titulaire_etat'])
-            + (type_sal == CAT['public_titulaire_territoriale'])
-            + (type_sal == CAT['public_titulaire_hospitaliere'])
+            (type_sal == type_sal_enum['public_titulaire_etat'])
+            + (type_sal == type_sal_enum['public_titulaire_territoriale'])
+            + (type_sal == type_sal_enum['public_titulaire_hospitaliere'])
             )
         return period, TAUX_DE_PRIME * traitement_indiciaire_brut * public
 
@@ -648,7 +652,7 @@ class supp_familial_traitement(Variable):
         sft = min_(max_(part_fixe + pct_variable * traitement_indiciaire_brut, plancher), plafond) * (type_sal >= 2)
         # Nota Bene:
         # type_sal is an EnumCol which enum is:
-        # CAT = Enum(['prive_non_cadre',
+        #       Enum(['prive_non_cadre',
         #             'prive_cadre',
         #             'public_titulaire_etat',
         #             'public_titulaire_militaire',

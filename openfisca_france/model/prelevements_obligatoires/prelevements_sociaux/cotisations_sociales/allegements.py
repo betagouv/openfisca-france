@@ -12,6 +12,7 @@ from numpy import (
 
 from ....base import *  # noqa analysis:ignore
 from .....assets.holidays import holidays
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 
 log = logging.getLogger(__name__)
 from openfisca_core import periods
@@ -28,7 +29,7 @@ class assiette_allegement(Variable):
         period = period
         # TODO vérifier changement d'assiette
         return period, assiette_cotisations_sociales * (
-            (type_sal == CAT['prive_non_cadre']) | (type_sal == CAT['prive_cadre'])
+            (type_sal == type_sal_enum['prive_non_cadre']) | (type_sal == type_sal_enum['prive_cadre'])
             )
 
 

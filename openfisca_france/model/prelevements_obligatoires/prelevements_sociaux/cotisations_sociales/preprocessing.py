@@ -8,6 +8,7 @@ import logging
 
 
 from ....base import *  # noqa
+from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 
 
 DEBUG_SAL_TYPE = 'public_titulaire_etat'
@@ -139,7 +140,7 @@ def preprocess_legislation(legislation_json):
             ('cotisations_salarie', sal['children']),
             ):
         for category, bareme in baremes.iteritems():
-            if category in CAT._nums:
+            if category in type_sal_enum._nums:
                 cotsoc['children'][cotisation_name]['children'][category] = bareme
 
     return legislation_json
