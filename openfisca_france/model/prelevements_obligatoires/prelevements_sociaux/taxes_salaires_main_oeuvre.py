@@ -231,7 +231,7 @@ class participation_effort_construction(Variable):
             simulation,
             period,
             cotisation_type = 'employeur',
-            bareme_name = 'construction',
+            bareme_name = 'construction_20',
             variable_name = self.__class__.__name__,
             )
         return period, cotisation

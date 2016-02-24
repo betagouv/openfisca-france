@@ -31,9 +31,6 @@ def build_pat(node_json):
     commun['children']['formprof_20'] = commun['children']['formprof_node']['children']['formprof_20']
     del commun['children']['formprof_node']
 
-    commun['children']['construction'] = commun['children']['construction_node']['children']['construction_20']
-    del commun['children']['construction_node']
-
     pat['children']['noncadre']['children'].update(commun['children'])
     pat['children']['cadre']['children'].update(commun['children'])
     pat['children']['fonc']['children']['contract']['children'].update(commun['children'])
@@ -43,12 +40,12 @@ def build_pat(node_json):
     pat['children']['prive_cadre'] = pat['children'].pop('cadre')
 
     # Rework commun to deal with public employees
-    for var in ["apprentissage", "apprentissage_add", "assedic", "chomfg", "construction", "maladie", "formprof_09",
+    for var in ["apprentissage", "apprentissage_add", "assedic", "chomfg", "construction_20", "maladie", "formprof_09",
                 "formprof_1019", "formprof_20", "vieillesse_deplafonnee", "vieillesse_plafonnee"]:
         del commun['children'][var]
 
     for var in ["apprentissage", "apprentissage_add", "formprof_09", "formprof_1019", "formprof_20", "chomfg",
-                "construction", "assedic"]:
+                "construction_20", "assedic"]:
         del pat['children']['fonc']['children']['contract']['children'][var]
 
     pat['children']['fonc']['children']['etat']['children'].update(commun['children'])
