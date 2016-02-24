@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ....base import CAT
+from openfisca_core.formula_helpers import switch
 
 def apply_bareme_for_relevant_type_sal(
         bareme_by_type_sal_name,
@@ -31,28 +32,24 @@ def apply_bareme_for_relevant_type_sal(
 
 def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None, variable_name = None):
     # period = period.this_month
-    cotisation_mode_recouvrement = simulation.calculate('cotisation_sociale_mode_recouvrement', period)
-    cotisation = (
-        # en fin d'année
-        cotisation_mode_recouvrement == 1) * (
-            compute_cotisation_annuelle(
-                simulation,
-                period,
-                cotisation_type = cotisation_type,
-                bareme_name = bareme_name,
-                )
-            ) + (
-        # anticipé
-        cotisation_mode_recouvrement == 0) * (
-            compute_cotisation_anticipee(
-                simulation,
-                period,
-                cotisation_type = cotisation_type,
-                bareme_name = bareme_name,
-                variable_name = variable_name,
-                )
+    return switch(
+            simulation.calculate('cotisation_sociale_mode_recouvrement', period),
+            {
+                0: compute_cotisation_anticipee(
+                    simulation,
+                    period,
+                    cotisation_type = cotisation_type,
+                    bareme_name = bareme_name,
+                    variable_name = variable_name,
+                    ),
+                1: compute_cotisation_annuelle(
+                    simulation,
+                    period,
+                    cotisation_type = cotisation_type,
+                    bareme_name = bareme_name,
+                    ),
+                },
             )
-    return cotisation
 
 
 def compute_cotisation(simulation, period, cotisation_type = None, bareme_name = None):
