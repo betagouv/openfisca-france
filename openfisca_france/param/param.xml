@@ -1346,18 +1346,6 @@
             </TAUX>
           </TRANCHE>
         </BAREME>
-        <BAREME code="construction_20" description="Effort à la construction">
-          <TRANCHE code="tranche0">
-            <SEUIL>
-              <VALUE deb="2015-01-01" fuzzy="true" valeur="0" />
-              <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0" />
-            </SEUIL>
-            <TAUX>
-              <VALUE deb="2015-01-01" fuzzy="true" valeur="0.0045" />
-              <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0.0045" />
-            </TAUX>
-          </TRANCHE>
-        </BAREME>
         <BAREME code="csa" description="Contribution solidarité autonomie (dépendance)" option="main-d-oeuvre">
           <TRANCHE code="tranche0">
             <SEUIL>

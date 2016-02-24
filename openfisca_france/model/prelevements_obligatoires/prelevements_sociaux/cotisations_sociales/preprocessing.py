@@ -40,12 +40,11 @@ def build_pat(node_json):
     pat['children']['prive_cadre'] = pat['children'].pop('cadre')
 
     # Rework commun to deal with public employees
-    for var in ["apprentissage", "apprentissage_add", "assedic", "chomfg", "construction_20", "maladie", "formprof_09",
+    for var in ["apprentissage", "apprentissage_add", "assedic", "chomfg", "maladie", "formprof_09",
                 "formprof_1019", "formprof_20", "vieillesse_deplafonnee", "vieillesse_plafonnee"]:
         del commun['children'][var]
 
-    for var in ["apprentissage", "apprentissage_add", "formprof_09", "formprof_1019", "formprof_20", "chomfg",
-                "construction_20", "assedic"]:
+    for var in ["apprentissage", "apprentissage_add", "formprof_09", "formprof_1019", "formprof_20", "chomfg", "assedic"]:
         del pat['children']['fonc']['children']['contract']['children'][var]
 
     pat['children']['fonc']['children']['etat']['children'].update(commun['children'])
