@@ -11,11 +11,9 @@ def apply_bareme_for_relevant_type_sal(
         plafond_securite_sociale,
         round_base_decimals = 2,
         ):
-    assert bareme_by_type_sal_name is not None
-    assert bareme_name is not None
-    assert type_sal is not None
-    assert base is not None
-    assert plafond_securite_sociale is not None
+    for parameter in [bareme_by_type_sal_name, bareme_name, type_sal, base, plafond_securite_sociale]:
+        assert parameter is not None
+
     def iter_cotisations():
         for type_sal_name, type_sal_index in CAT:
             if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
