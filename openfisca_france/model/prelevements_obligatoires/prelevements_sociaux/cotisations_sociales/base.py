@@ -32,24 +32,52 @@ def apply_bareme_for_relevant_type_sal(
 
 def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None, variable_name = None):
     # period = period.this_month
+    def compute_for(_period):
+        return compute_cotisation(
+            simulation,
+            _period,
+            cotisation_type = cotisation_type,
+            bareme_name = bareme_name,
+            )
+
     return switch(
             simulation.calculate('cotisation_sociale_mode_recouvrement', period),
-            {
+            {   # anticipé
                 0: compute_cotisation_anticipee(
                     simulation,
                     period,
-                    cotisation_type = cotisation_type,
-                    bareme_name = bareme_name,
-                    variable_name = variable_name,
+                    compute_for,
+                    variable_name,
                     ),
+                # en fin d'année
                 1: compute_cotisation_annuelle(
-                    simulation,
                     period,
-                    cotisation_type = cotisation_type,
-                    bareme_name = bareme_name,
-                    ),
+                    compute_for)
                 },
             )
+
+
+def compute_cotisation_anticipee(simulation, period, compute_for, variable_name=None):
+    if period.start.month < 12:
+        return compute_for(period.this_month)
+
+    if period.start.month == 12:
+        assert variable_name is not None
+        _period = period.start\
+                        .offset('first-of', 'month')\
+                        .offset(-11, 'month')\
+                        .period('month', 11)
+        # December variable_name depends on variable_name in the past 11 months.
+        # We need to explicitly allow this recursion.
+        cumul = simulation.calculate_add(variable_name, _period, max_nb_cycles = 1)
+        return compute_for(period.this_year) - cumul
+
+
+def compute_cotisation_annuelle(period, compute_for):
+    if period.start.month < 12:
+        return 0
+    if period.start.month == 12:
+        return compute_for(period.this_year)
 
 
 def compute_cotisation(simulation, period, cotisation_type = None, bareme_name = None):
@@ -76,34 +104,3 @@ def compute_cotisation(simulation, period, cotisation_type = None, bareme_name =
     return cotisation
 
 
-def compute_cotisation_annuelle(simulation, period, cotisation_type = None, bareme_name = None):
-    if period.start.month < 12:
-        return 0
-    if period.start.month == 12:
-        return compute_cotisation(
-            simulation,
-            period.this_year,
-            cotisation_type = cotisation_type,
-            bareme_name = bareme_name,
-            )
-
-
-def compute_cotisation_anticipee(simulation, period, cotisation_type = None, bareme_name = None, variable_name = None):
-    if period.start.month < 12:
-        return compute_cotisation(
-            simulation,
-            period.this_month,
-            cotisation_type = cotisation_type,
-            bareme_name = bareme_name,
-            )
-    if period.start.month == 12:
-        assert variable_name is not None
-        cumul = simulation.calculate_add(variable_name, period.start.offset('first-of', 'month').offset(
-            -11, 'month').period('month', 11), max_nb_cycles = 1) # December variable_name depends on variable_name in the past 11 months. We need to explicitely allow this recursion.
-
-        return compute_cotisation(
-            simulation,
-            period.this_year,
-            cotisation_type = cotisation_type,
-            bareme_name = bareme_name,
-            ) - cumul
