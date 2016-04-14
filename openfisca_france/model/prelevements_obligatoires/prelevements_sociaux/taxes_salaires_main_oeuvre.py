@@ -224,17 +224,20 @@ class participation_effort_construction(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"Participation à l'effort de construction"
+    applies_to = {
+        "type_sal": ["prive_non_cadre", "prive_cadre"]
+    }
+    tags = {
+        "type": "prelevement", # vs e.g. prestation, exoneration_prelevement
+        "prelevement_type": "cotisation", # vs e.g. contribution
+        "cotisation_type": "employeur",
+        "collecteur": "SIE"
+    }
+    period = "month"
 
-    def function(self, simulation, period):
-        period = period.start.period(u'month').offset('first-of')
-        cotisation = apply_bareme(
-            simulation,
-            period,
-            cotisation_type = 'employeur',
-            bareme_name = 'construction_20',
-            variable_name = self.__class__.__name__,
-            )
-        return period, cotisation
+    # A payer sur les revenus des années précédentes : https://www.service-public.fr/professionnels-entreprises/vosdroits/F22583
+
+    apply = "bareme"
 
 
 class taxe_apprentissage(Variable):

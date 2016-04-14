@@ -1,14 +1,61 @@
 <NODE code="deux" description="Terrain de jeu">
-  <BAREME code="construction_20" description="Effort à la construction">
-    <TRANCHE code="tranche0">
+<!-- In this new experimental param file, everything is flat. The only nodes are BAREME and CODE (one can design new ones).
+
+The difficulty is to express everything in this flat world...
+Global idea : the hierarchy can be reproduced from the info contained in formulas.
+
+-->
+
+
+
+  <!-- CASE OF BAREMES
+  This BAREME used to be in root.cotsoc.pat.commun.construction_node.construction_20 (because it is valid only for effectif > 20)
+
+  The preprocessing.py would move it to commun.construction.
+  And would add it as part of "commun" to pat.cadre, pat.noncadre, pat.fonc.contract...
+  but then remove it from contract, and remove it from "commun" to add "commun" to "fonc.etat" and "fonc.colloc"
+
+  This introduced a long lasting bug : the formula forgot about this effectif condition (it lost the "20" information in preprocessing).
+  In cotisations_sociales/base.py, "type_sal" will be computed and the effort_construction bareme will be added when pat.X contains it.
+
+  So the param.xml hierarchy, *modified* by preprocessing.py, determines what type_sal will pay the effort_construction cotisation.
+  Better explicit this very important information somewhere else, right ?
+
+  Where ?
+  - in the param node - if it needs to be precise (e.g. involving dates, or bareme tranches)
+  - in the formula - in the most common case
+
+  -->
+  <!-- use the variable="variable_name" attribute to link the node directly to the variable where it is used -->
+  <BAREME variable="participation_effort_construction" description="Participation à l'effort de construction">
+    <TRANCHE>
       <SEUIL>
         <VALUE deb="2015-01-01" fuzzy="true" valeur="0" />
         <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0" />
       </SEUIL>
-      <TAUX>
+      <!-- input variables can be used as conditions in XML node attributes -->
+      <TAUX effectif_entreprise=">=20">
         <VALUE deb="2015-01-01" fuzzy="true" valeur="0.0045" />
         <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0.0045" />
       </TAUX>
+      <TAUX effectif_entreprise=">=10,<20">
+        <VALUE deb="2005-08-01" fuzzy="true" valeur="0" />
+        <VALUE deb="1992-01-01" fin="2005-07-31" valeur="0.0045" />
+      </TAUX>
+      <!-- Implicit: for conditions not matched (< 10), return the value 0 -->
+
+      <!-- Alternative for effectif_entreprise -->
+      <TAUX>
+        <VALUE  effectif_entreprise=">=20"
+                deb="2005-08-01" fuzzy="true" valeur="0.0045" />
+        <VALUE  effectif_entreprise=">=10"
+                deb="1992-01-01" fin="2005-07-31" valeur="0.0045" />
+      </TAUX>
     </TRANCHE>
   </BAREME>
+
+
+
+
+
 </NODE>

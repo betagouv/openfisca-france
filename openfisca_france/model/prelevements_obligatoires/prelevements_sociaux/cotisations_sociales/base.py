@@ -90,6 +90,7 @@ def apply_bareme_for_relevant_type_sal(
     for parameter in [bareme_by_type_sal_name, bareme_name, type_sal, base, plafond_securite_sociale]:
         assert parameter is not None
 
+    # Why loop on type_sal_enum instead of on type_sal ?
     def iter_cotisations():
         for type_sal_name, type_sal_index in type_sal_enum:
             if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
