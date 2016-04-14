@@ -4,30 +4,6 @@ from openfisca_france.model.revenus.activite.salarie import type_sal_enum
 
 from openfisca_core.formula_helpers import switch
 
-def apply_bareme_for_relevant_type_sal(
-        bareme_by_type_sal_name,
-        bareme_name,
-        type_sal,
-        base,
-        plafond_securite_sociale,
-        round_base_decimals = 2,
-        ):
-    for parameter in [bareme_by_type_sal_name, bareme_name, type_sal, base, plafond_securite_sociale]:
-        assert parameter is not None
-
-    def iter_cotisations():
-        for type_sal_name, type_sal_index in type_sal_enum:
-            if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
-                continue
-            bareme = bareme_by_type_sal_name[type_sal_name].get(bareme_name)  # TODO; should have better warnings
-            if bareme is not None:
-                yield bareme.calc(
-                    base * (type_sal == type_sal_index),
-                    factor = plafond_securite_sociale,
-                    round_base_decimals = round_base_decimals,
-                    )
-    return - sum(iter_cotisations())
-
 
 def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None, variable_name = None):
     # period = period.this_month
@@ -35,7 +11,7 @@ def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None,
         return compute_cotisation(
             simulation,
             _period,
-            cotisation_type = cotisation_type,
+            cotisation_type = cotisation_type, # e.g. employeur
             bareme_name = bareme_name,
             )
 
@@ -102,4 +78,28 @@ def compute_cotisation(simulation, period, cotisation_type = None, bareme_name =
         )
     return cotisation
 
+
+def apply_bareme_for_relevant_type_sal(
+        bareme_by_type_sal_name,
+        bareme_name,
+        type_sal,
+        base,
+        plafond_securite_sociale,
+        round_base_decimals = 2,
+        ):
+    for parameter in [bareme_by_type_sal_name, bareme_name, type_sal, base, plafond_securite_sociale]:
+        assert parameter is not None
+
+    def iter_cotisations():
+        for type_sal_name, type_sal_index in type_sal_enum:
+            if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
+                continue
+            bareme = bareme_by_type_sal_name[type_sal_name].get(bareme_name)  # TODO; should have better warnings
+            if bareme is not None:
+                yield bareme.calc(
+                    base * (type_sal == type_sal_index),
+                    factor = plafond_securite_sociale,
+                    round_base_decimals = round_base_decimals,
+                    )
+    return - sum(iter_cotisations())
 
