@@ -233,6 +233,14 @@ class participation_effort_construction(Variable):
         "cotisation_type": "employeur",
         "collecteur": "SIE"
     }
+    tags = {
+        "type": "prelevement", # vs e.g. prestation, exoneration_prelevement
+        "type_prelevement": "cotisation", # vs e.g. contribution
+        "cotisation_au_nom": "employeur",
+        "payeur": "entreprise",
+        "collecteur": "SIE",
+        "droit_acquis": "logement"
+     }
     period = "month"
 
     # A payer sur les revenus des années précédentes : https://www.service-public.fr/professionnels-entreprises/vosdroits/F22583

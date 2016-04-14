@@ -179,7 +179,7 @@ class agirc_gmp_assiette(Variable):
     def function(self, simulation, period):
         period = period.start.period(u'month').offset('first-of')
         assiette_cotisations_sociales = simulation.calculate('assiette_cotisations_sociales', period)
-        salaire_charniere = simulation.legislation_at(period.start).cotsoc.agirc_gmp.salaire_charniere  # annuel
+        salaire_charniere = self.parameter(period.start)  # annuel
         assiette = max_(
             (salaire_charniere / 12 - assiette_cotisations_sociales) * (assiette_cotisations_sociales > 0),
             0,
@@ -191,6 +191,17 @@ class agirc_gmp_salarie(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"Cotisation AGIRC pour la garantie minimale de points (GMP,  salarié)"
+    applies_to = {
+        "type_sal": ["prive_cadre"]
+    }
+    tags = {
+        "type": "prelevement", # vs e.g. prestation, exoneration_prelevement
+        "type_prelevement": "cotisation", # vs e.g. contribution
+        "cotisation_au_nom": "salarie",
+        "payeur": "entreprise",
+        "collecteur": "agirc-arrco",
+        "droit_acquis": "retraite",
+     }
     # TODO: gestion annuel/mensuel
 
     def function(self, simulation, period):
@@ -200,9 +211,8 @@ class agirc_gmp_salarie(Variable):
         assiette_cotisations_sociales = simulation.calculate('assiette_cotisations_sociales', period)
         type_sal = simulation.calculate('type_sal', period)
 
-        law = simulation.legislation_at(period.start).cotsoc.agirc_gmp
-        cotisation_forfaitaire = law.cotisation_salarie
-        taux = simulation.legislation_at(period.start).cotsoc.cotisations_salarie.prive_cadre.agirc.rates[1]
+        cotisation_forfaitaire = self.parameter(period.start)
+        taux = simulation.legislation_at(period.start).agirc_salarie.rates[1]
 
         sous_plafond_securite_sociale = (
             (assiette_cotisations_sociales <= plafond_securite_sociale) & (assiette_cotisations_sociales > 0)
@@ -213,7 +223,7 @@ class agirc_gmp_salarie(Variable):
             )
         return period, min_((cotisation - agirc_salarie) * (type_sal == 1), 0)  # cotisation are negative
 
-
+#TODO param2 : see agirc_gmp_salarie
 class agirc_gmp_employeur(Variable):
     column = FloatCol
     entity_class = Individus

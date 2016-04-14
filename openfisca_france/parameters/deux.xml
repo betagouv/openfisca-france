@@ -54,8 +54,26 @@ Global idea : the hierarchy can be reproduced from the info contained in formula
     </TRANCHE>
   </BAREME>
 
+  <!-- CASE OF CODES
 
+  AGIRC GMP : params.cotsoc.agirc_gmp
+  Simplified : there has been way more than 2 year changes
+  -->
 
+  <CODE variable="agirc_gmp_salarie" description="Garantie minimale de points AGIRC employeur">
+    <VALUE deb="2017-01-01" fuzzy="true" valeur="42.23" />
+    <VALUE deb="2016-01-01" fin="2016-12-31" valeur="42.23" />
+    <VALUE deb="2014-01-01" fin="2015-12-31" valeur="41.17" />
+  </CODE>
+  <CODE variable="agirc_gmp_employee" description="Garantie minimale de points AGIRC salarié">
+    <VALUE deb="2017-01-01" fuzzy="true" valeur="25.84" />
+    <VALUE deb="2016-01-01" fin="2016-12-31" valeur="25.84" />
+    <VALUE deb="2014-01-01" fin="2015-12-31" valeur="25.17" />
+  </CODE>
 
-
-</NODE>
+  <CODE code="agirc_gmp_assiette" description="Salaire charnière annuel">
+    <VALUE deb="2017-01-01" fuzzy="true" valeur="42590.88" />
+    <VALUE deb="2016-01-01" fin="2016-12-31" valeur="42590.88" />
+    <VALUE deb="2015-01-01" fin="2015-12-31" valeur="41913.84" />
+    <VALUE deb="2014-01-01" fin="2014-12-31" valeur="41444.64" />
+  </CODE>
