@@ -191,7 +191,7 @@ class agirc_gmp_salarie(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"Cotisation AGIRC pour la garantie minimale de points (GMP,  salarié)"
-    applies_to = {
+    only_for = {
         "type_sal": ["prive_cadre"]
     }
     tags = {
