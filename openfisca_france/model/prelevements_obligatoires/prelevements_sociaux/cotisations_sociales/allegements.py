@@ -206,7 +206,7 @@ class allegement_fillon(DatedVariable):
                 allegement_mode_recouvrement,
                 self.__class__.__name__,
                 )
-                
+
         return period, allegement * not_(stagiaire) * not_(apprenti)
 
 

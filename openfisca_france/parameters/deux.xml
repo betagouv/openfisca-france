@@ -30,27 +30,20 @@ Global idea : the hierarchy can be reproduced from the info contained in formula
   <BAREME variable="participation_effort_construction" description="Participation à l'effort de construction">
     <TRANCHE>
       <SEUIL>
-        <VALUE deb="2015-01-01" fuzzy="true" valeur="0" />
-        <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0" />
+        <VALUE deb="1992-01-01" fuzzy="true" valeur="0" />
       </SEUIL>
       <!-- input variables can be used as conditions in XML node attributes -->
-      <TAUX effectif_entreprise=">=20">
-        <VALUE deb="2015-01-01" fuzzy="true" valeur="0.0045" />
-        <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0.0045" />
-      </TAUX>
-      <TAUX effectif_entreprise=">=10,<20">
-        <VALUE deb="2005-08-01" fuzzy="true" valeur="0" />
-        <VALUE deb="1992-01-01" fin="2005-07-31" valeur="0.0045" />
+      <TAUX>
+        <VAR  condition="effectif_entreprise >= 20">
+          <VALUE deb="2015-01-01" fuzzy="true" valeur="0.0045" />
+          <VALUE deb="1992-01-01" fin="2014-12-31" valeur="0.0045" />
+        </VAR>
+        <VAR  condition="10 <= effectif_entreprise < 20">
+          <VALUE deb="2005-08-01" fuzzy="true" valeur="0" />
+          <VALUE deb="1992-01-01" fin="2005-07-31" valeur="0.0045" />
+        </VAR>
       </TAUX>
       <!-- Implicit: for conditions not matched (< 10), return the value 0 -->
-
-      <!-- Alternative for effectif_entreprise -->
-      <TAUX>
-        <VALUE  effectif_entreprise=">=20"
-                deb="2005-08-01" fuzzy="true" valeur="0.0045" />
-        <VALUE  effectif_entreprise=">=10"
-                deb="1992-01-01" fin="2005-07-31" valeur="0.0045" />
-      </TAUX>
     </TRANCHE>
   </BAREME>
 
@@ -77,3 +70,67 @@ Global idea : the hierarchy can be reproduced from the info contained in formula
     <VALUE deb="2015-01-01" fin="2015-12-31" valeur="41913.84" />
     <VALUE deb="2014-01-01" fin="2014-12-31" valeur="41444.64" />
   </CODE>
+
+
+  <!-- CONDITIONNAL CODES -->
+  <!-- The hierarchy for exo_bas_sal > ... fillon > ... is lost : it doesn't belong in the param files  -->
+
+  <CODE code="fillon_seuil_salaire" description="Point de sortie (en smic)" format="percent">
+    <VALUE deb="2017-01-01" fuzzy="true" valeur="1.6" />
+    <VALUE deb="2005-07-01" fin="2016-12-31" valeur="1.6" />
+  </CODE>
+  <CODE code="fillon_taux_max" description="Taux maximum" format="percent">
+    <VAR condition="effectif_entreprise >= 20">
+      <VALUE deb="2018-01-01" fuzzy="true" valeur=".2850" />
+      <VALUE deb="2017-01-01" fin="2017-12-31" valeur=".2850" />
+      <VALUE deb="2016-01-01" fin="2016-12-31" valeur=".2842" />
+      <VALUE deb="2015-01-01" fin="2015-12-31" valeur=".2835" />
+      <VALUE deb="2005-07-01" fin="2014-12-31" valeur=".26" />
+    </VAR>
+    <VAR condition="effectif_entreprise < 20">
+      <VALUE deb="2018-01-01" fuzzy="true" valeur=".2810" />
+      <VALUE deb="2017-01-01" fin="2017-12-31" valeur=".2810" />
+      <VALUE deb="2016-01-01" fin="2016-12-31" valeur=".2802" />
+      <VALUE deb="2015-01-01" fin="2015-12-31" valeur=".2795" />
+      <VALUE deb="2007-07-01" fin="2014-12-31" valeur=".281" />
+      <VALUE deb="2005-07-01" fin="2007-06-30" valeur=".26" />
+    </VAR>
+  </CODE>
+
+
+<!-- Deux variables !! -->
+
+<CODE code="contribution_supplementaire_apprentissage" description="Contribution supplémentaire d'apprentissage">
+  <VAR condition="pourcentage_alternants < 1">
+    <VAR condition="effectif_entreprise > 2000">
+      <VALUE deb="2016-01-01" fuzzy="true" valeur=".006" />
+      <VALUE deb="2014-01-01" fin="2015-12-31" valeur=".006" />
+      <VALUE deb="2013-01-01" fin="2013-12-31" valeur=".005" />
+    </VAR>
+    <VAR condition="effectif_entreprise <= 2000">
+      <VALUE deb="2016-01-01" fuzzy="true" valeur=".006" />
+      <VALUE deb="2014-01-01" fin="2015-12-31" valeur=".006" />
+      <VALUE deb="2013-01-01" fin="2013-12-31" valeur=".005" />
+    </VAR>
+  </VAR>
+  <VAR condition="1 <= pourcentage_alternants < 2">
+    <VALUE deb="2016-01-01" fuzzy="true" valeur=".002" />
+    <VALUE deb="2015-01-01" fin="2015-12-31" valeur=".002" />
+    <VALUE deb="2013-01-01" fin="2014-12-31" valeur=".001" />
+  </VAR>
+  <VAR condition="2 <= pourcentage_alternants < 3">
+    <VALUE deb="2016-01-01" fuzzy="true" valeur=".002" />
+    <VALUE deb="2015-01-01" fin="2015-12-31" valeur=".002" />
+    <VALUE deb="2013-01-01" fin="2014-12-31" valeur=".001" />
+  </VAR>
+  <!-- ETC -->
+</NODE>
+
+<!-- CICE, FILLON, ALLGMT COT ALLOC FAM
+BAREME with SEUIL ON SALARY ? -->
+
+<!-- Cas incertains
+
+- <NODE code="assiette" description="Paramètres régissant l'assiette des cotisations sociales">
+
+ -->
