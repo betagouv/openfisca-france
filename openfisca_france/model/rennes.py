@@ -7,3 +7,7 @@ class rennes_metropole_transport(Variable):
     column = FloatCol
     entity_class = Familles
     label = u"Rennes"
+
+
+    def function(self, simulation, period):
+        return period, self.zeros() + 50
