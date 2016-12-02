@@ -185,7 +185,7 @@ class aah_non_calculable(Variable):
         taux_incapacite = individu('taux_incapacite', period)
         aah_eligible = individu('aah_eligible', period)
 
-        return period, aah_eligible * (taux_incapacite < 0.8)
+        return period, aah_eligible  * (taux_incapacite < 0.8) * False
 
 
 class aah_base(Variable):
