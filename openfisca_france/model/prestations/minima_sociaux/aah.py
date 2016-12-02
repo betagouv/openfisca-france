@@ -68,49 +68,45 @@ class aah_base_ressources_eval_trimestrielle(Variable):
         ressources à partir de votre revenu mensuel.
     '''
 
-    def function(self, simulation, period):
+    def function(individu, period):
         period = period.this_month
         three_previous_months = period.start.period('month', 3).offset(-3)
         last_year = period.last_year
 
-        salaire_net = simulation.calculate_add('salaire_net', three_previous_months)
-        chomage_net = simulation.calculate_add('chomage_net', three_previous_months)
-        retraite_nette = simulation.calculate_add('retraite_nette', three_previous_months)
-        pensions_alimentaires_percues = simulation.calculate_add('pensions_alimentaires_percues', three_previous_months)
-        pensions_alimentaires_versees_individu = simulation.calculate_add(
-            'pensions_alimentaires_versees_individu', three_previous_months)
-        rsa_base_ressources_patrimoine_i = simulation.calculate_add('rsa_base_ressources_patrimoine_individu', three_previous_months)
-        indemnites_journalieres_imposables = simulation.calculate_add('indemnites_journalieres_imposables', three_previous_months)
-        indemnites_stage = simulation.calculate_add('indemnites_stage', three_previous_months)
-        revenus_stage_formation_pro = simulation.calculate_add('revenus_stage_formation_pro', three_previous_months)
-        allocation_securisation_professionnelle = simulation.calculate_add(
-            'allocation_securisation_professionnelle', three_previous_months)
-        prestation_compensatoire = simulation.calculate_add('prestation_compensatoire', three_previous_months)
-        pensions_invalidite = simulation.calculate_add('pensions_invalidite', three_previous_months)
-        indemnites_chomage_partiel = simulation.calculate_add('indemnites_chomage_partiel', three_previous_months)
-        bourse_recherche = simulation.calculate_add('bourse_recherche', three_previous_months)
-        gains_exceptionnels = simulation.calculate_add('gains_exceptionnels', three_previous_months)
+        ressources_a_inclure = [
+            'allocation_securisation_professionnelle',
+            'bourse_recherche',
+            'chomage_net',
+            'gains_exceptionnels',
+            'indemnites_chomage_partiel',
+            'indemnites_journalieres_imposables',
+            'indemnites_stage',
+            'pensions_alimentaires_percues',
+            'pensions_alimentaires_versees_individu',
+            'pensions_invalidite',
+            'prestation_compensatoire',
+            'retraite_nette',
+            'revenus_stage_formation_pro',
+            'rsa_base_ressources_patrimoine_individu',
+            'salaire_net',
+            ]
+
+        ressources = sum(
+            [individu(ressource, options = [ADD]) for ressource in ressources_a_inclure]
+            )
+
 
         def revenus_tns():
-            revenus_auto_entrepreneur = simulation.calculate_add('tns_auto_entrepreneur_benefice', three_previous_months)
+            revenus_auto_entrepreneur = individu('tns_auto_entrepreneur_benefice', three_previous_months, options = [ADD])
 
             # Les revenus TNS hors AE sont estimés en se basant sur le revenu N-1
-            tns_micro_entreprise_benefice = simulation.calculate('tns_micro_entreprise_benefice', last_year) * 3 / 12
-            tns_benefice_exploitant_agricole = simulation.calculate('tns_benefice_exploitant_agricole', last_year) * 3 / 12
-            tns_autres_revenus = simulation.calculate('tns_autres_revenus', last_year) * 3 / 12
+            tns_micro_entreprise_benefice = individu('tns_micro_entreprise_benefice', last_year) * 3 / 12
+            tns_benefice_exploitant_agricole = individu('tns_benefice_exploitant_agricole', last_year) * 3 / 12
+            tns_autres_revenus = individu('tns_autres_revenus', last_year) * 3 / 12
 
             return revenus_auto_entrepreneur + tns_micro_entreprise_benefice + tns_benefice_exploitant_agricole + tns_autres_revenus
 
-        result = (
-            salaire_net + indemnites_chomage_partiel + indemnites_stage + chomage_net + retraite_nette +
-            pensions_alimentaires_percues - abs_(pensions_alimentaires_versees_individu) +
-            rsa_base_ressources_patrimoine_i + allocation_securisation_professionnelle +
-            indemnites_journalieres_imposables + prestation_compensatoire +
-            pensions_invalidite + bourse_recherche + gains_exceptionnels + revenus_tns() +
-            revenus_stage_formation_pro
-        )
-
-        return period, result * 4
+        return period, (ressources + revenus_tns()) * 4
 
 
 class aah_base_ressources_eval_annuelle(Variable):
