@@ -200,11 +200,13 @@ class aah_base(Variable):
 
         aah_eligible = individu('aah_eligible', period)
         aah_non_calculable = individu('aah_non_calculable', period)
-        aah_base_ressources = individu.famille('aah_base_ressources', period)
+        aah_base_ressources = individu.famille('aah_base_ressources', period) / 12
         en_couple = individu.famille('en_couple', period)
         af_nbenf = individu.famille('af_nbenf', period)
-        plaf_ress_aah = 12 * law.minima_sociaux.aah.montant * (1 + en_couple + law.minima_sociaux.aah.tx_plaf_supp * af_nbenf)
-        montant_aah = max_(plaf_ress_aah - aah_base_ressources, 0) / 12
+        montant_max = law.minima_sociaux.aah.montant
+        plaf_ress_aah = montant_max * (1 + en_couple + law.minima_sociaux.aah.tx_plaf_supp * af_nbenf)
+        montant_aah = min_(plaf_ress_aah - aah_base_ressources, montant_max) # Le montant de l'AAH est plafonné au montant de base.
+        montant_aah = max_(montant_aah, 0)
 
         # Pour le moment, on ne neutralise pas l'aah en cas de non calculabilité pour pouvoir tester
         return period, aah_eligible *  montant_aah # * not_(aah_non_calculable)
