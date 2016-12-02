@@ -111,7 +111,7 @@ class aah_base_ressources_eval_trimestrielle(Variable):
 
 class aah_base_ressources_eval_annuelle(Variable):
     column = FloatCol
-    label = u"Base de ressources de l'ASS pour un individu, évaluation annuelle"
+    label = u"Base de ressources de l'AAH pour un individu, évaluation annuelle"
     entity = Individu
 
     def function(self, simulation, period):
