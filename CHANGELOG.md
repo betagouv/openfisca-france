@@ -1,5 +1,7 @@
 # Changelog
 
+## 30.0.0 WIP
+
 ### 21.12.2 [#1032](https://github.com/openfisca/openfisca-france/pull/1032)
 
 * Correction d'un bug dans le script qui détermine le besoin d'un bump de version
