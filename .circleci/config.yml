@@ -24,12 +24,18 @@ jobs:
           command: |
             pip install --upgrade pip twine wheel
             pip install --editable .[test] --upgrade
+            pip install ruamel.yaml
           #  pip install --editable git+https://github.com/openfisca/openfisca-core.git@BRANCH_NAME#egg=OpenFisca-Core  # use a specific branch of OpenFisca-Core
 
       - save_cache:
           key: v1-py2-{{ checksum "setup.py" }}
           paths:
             - /tmp/venv/openfisca_france
+
+      - run:
+          name: Run YAML formatter
+          command: |
+            python openfisca_france/scripts/yaml_round_trip.py
 
       - run:
           name: Run tests
@@ -97,12 +103,18 @@ jobs:
           command: |
             pip install --upgrade pip twine wheel
             pip install --editable .[test] --upgrade
+            pip install ruamel.yaml
           #  pip install --editable git+https://github.com/openfisca/openfisca-core.git@BRANCH_NAME#egg=OpenFisca-Core  # use a specific branch of OpenFisca-Core
 
       - save_cache:
           key: v1-py3-{{ checksum "setup.py" }}
           paths:
             - /tmp/venv/openfisca_france
+
+      - run:
+          name: Run YAML formatter
+          command: |
+            python openfisca_france/scripts/yaml_round_trip.py
 
       - run:
           name: Run tests
