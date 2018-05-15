@@ -160,7 +160,7 @@ class rsa_base_ressources_minima_sociaux(Variable):
         asi_i = famille.members('asi', mois_courant)
         caah_i = famille.members('caah', mois_courant)
 
-        return aspa + asi + ass + famille.sum(aah_i + asi_i + caah_i)
+        return aspa + ass + famille.sum(aah_i + asi_i + caah_i)
 
     def formula(famille, period):
         three_previous_months = period.last_3_months
