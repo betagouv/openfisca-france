@@ -300,7 +300,7 @@ class caah(Variable):
 
         aah = individu('aah', period)
         asi_eligibilite = individu('asi_eligibilite', period)
-        asi = individu.famille('asi', period)  # montant asi de la famille
+        asi = individu('asi', period)  # montant asi de la famille
         benef_asi = (asi_eligibilite * (asi > 0))
         al = individu.famille('aide_logement_montant', period) # montant allocs logement de la famille
 
@@ -325,7 +325,7 @@ class caah(Variable):
 
         aah = individu('aah', period)
         asi_eligibilite = individu('asi_eligibilite', period)
-        asi = individu.famille('asi', period)  # montant asi de la famille
+        asi = individu('asi', period)  # montant asi de la famille
         benef_asi = (asi_eligibilite * (asi > 0))
         al = individu.famille('aide_logement_montant', period) # montant allocs logement de la famille
 
