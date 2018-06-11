@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Run YAML formatter
           command: |
-            python openfisca_france/scripts/yaml_round_trip.py
+            python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
 
       - run:
           name: Run tests
@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Run YAML formatter
           command: |
-            python openfisca_france/scripts/yaml_round_trip.py
+            python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
 
       - run:
           name: Run tests
