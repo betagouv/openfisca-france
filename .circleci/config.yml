@@ -33,20 +33,15 @@ jobs:
             - /tmp/venv/openfisca_france
 
       - run:
-          name: Run YAML formatter
+          name: Run YAML formatter and check for changes
           command: |
-            python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
+            .circleci/are-yaml-files-properly-formatted.sh
 
       - run:
           name: Run tests
           command: |
             nosetests `circleci tests glob tests/**/*.py | circleci tests split`
             openfisca-run-test `circleci tests glob tests/**/*.{yaml,yml} | circleci tests split`
-
-      - run:
-          name: Check YAML file format
-          command: |
-            .circleci/are-yaml-files-properly-formatted.sh
 
       - run:
           name: Check version number has been properly updated
@@ -117,20 +112,15 @@ jobs:
             - /tmp/venv/openfisca_france
 
       - run:
-          name: Run YAML formatter
+          name: Run YAML formatter and check for changes
           command: |
-            python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
+            .circleci/are-yaml-files-properly-formatted.sh
 
       - run:
           name: Run tests
           command: |
             nosetests `circleci tests glob tests/**/*.py | circleci tests split`
             openfisca-run-test `circleci tests glob tests/**/*.{yaml,yml} | circleci tests split`
-
-      - run:
-          name: Check YAML file format
-          command: |
-            .circleci/are-yaml-files-properly-formatted.sh
 
       - run:
           name: Check version number has been properly updated

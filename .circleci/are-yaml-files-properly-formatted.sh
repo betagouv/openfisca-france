@@ -2,6 +2,8 @@
 
 shopt -s globstar
 
+python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
+
 if ! git diff-index --name-only --exit-code HEAD -- **/*.yaml
 then
     echo "This or those files are not appropriately formatted."
