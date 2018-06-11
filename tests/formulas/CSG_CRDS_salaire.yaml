@@ -1,9 +1,9 @@
-- period: "2016-06"
+- period: 2016-06
   name: CSG
   relative_error_margin: 0.001
   input_variables:
     salaire_de_base: 1467
-    complementaire_sante_taux_employeur: .625
+    complementaire_sante_taux_employeur: 0.62
     complementaire_sante_montant: 40
     categorie_salarie: prive_cadre
     # prevoyance_obligatoire_cadre_taux_employeur: taux par défaut : 1.5 %
@@ -16,12 +16,12 @@
     csg_deductible_salaire: -(1467 * .9825 + 40 * .625 + 1467 * 1.5 / 100) * 5.1 / 100
 
 
-- period: "2018-01"
+- period: 2018-01
   name: CSG et CRDS
   relative_error_margin: 0.001
   input_variables:
     salaire_de_base: 1500
-    complementaire_sante_taux_employeur: .625
+    complementaire_sante_taux_employeur: 0.62
     complementaire_sante_montant: 40
     categorie_salarie: prive_cadre # cadre
     # prevoyance_obligatoire_cadre_taux_employeur: taux par défaut : 1.5 %
