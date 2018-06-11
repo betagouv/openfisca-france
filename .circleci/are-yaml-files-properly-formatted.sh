@@ -1,10 +1,8 @@
 #! /usr/bin/env bash
 
-shopt -s globstar
+python openfisca_france/scripts/yaml_round_trip.py $@
 
-python openfisca_france/scripts/yaml_round_trip.py **/*.yaml
-
-if ! git diff-index --name-only --exit-code HEAD -- **/*.yaml
+if ! git diff-index --name-only --exit-code HEAD -- $@
 then
     echo "This or those files are not appropriately formatted."
     echo "Run openfisca_france/scripts/yaml_round_trip.py to format files and git diff to see the differences."

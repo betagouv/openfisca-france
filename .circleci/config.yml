@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Run YAML formatter and check for changes
           command: |
-            .circleci/are-yaml-files-properly-formatted.sh
+            .circleci/are-yaml-files-properly-formatted.sh `circleci tests glob **/*.yaml`
 
       - run:
           name: Run tests
@@ -114,7 +114,7 @@ jobs:
       - run:
           name: Run YAML formatter and check for changes
           command: |
-            .circleci/are-yaml-files-properly-formatted.sh
+            .circleci/are-yaml-files-properly-formatted.sh `circleci tests glob **/*.yaml`
 
       - run:
           name: Run tests
