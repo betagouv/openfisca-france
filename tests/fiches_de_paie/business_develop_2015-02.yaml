@@ -7,10 +7,10 @@ input_variables:
   effectif_entreprise: 5
   forfait_jours_remuneres_volume: 217
   jeune_entreprise_innovante: 1
-  prevoyance_obligatoire_cadre_taux_employeur: 0.007
+  prevoyance_obligatoire_cadre_taux_employeur: 0.0074
   primes_salaires: 172.9
   salaire_de_base: 2000
-  taux_accident_travail: 0.01
+  taux_accident_travail: 0.011
   categorie_salarie: prive_cadre
 output_variables:
   coefficient_proratisation: 217/218

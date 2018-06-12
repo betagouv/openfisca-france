@@ -23,7 +23,7 @@ input_variables:
   remboursement_transport_base: 0
   salaire_de_base: 1800
   taux_accident_travail: 0.015
-  taux_versement_transport: 0.0
+  taux_versement_transport: 0.02
   titre_restaurant_valeur_unitaire: 0
   titre_restaurant_volume: 0
   categorie_salarie: prive_non_cadre
