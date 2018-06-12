@@ -33,11 +33,6 @@ jobs:
             - /tmp/venv/openfisca_france
 
       - run:
-          name: Run YAML formatter and check for changes
-          command: |
-            .circleci/are-yaml-files-properly-formatted.sh `circleci tests glob **/*.yaml`
-
-      - run:
           name: Run tests
           command: |
             nosetests `circleci tests glob tests/**/*.py | circleci tests split`
@@ -110,11 +105,6 @@ jobs:
           key: v1-py3-{{ checksum "setup.py" }}
           paths:
             - /tmp/venv/openfisca_france
-
-      - run:
-          name: Run YAML formatter and check for changes
-          command: |
-            .circleci/are-yaml-files-properly-formatted.sh `circleci tests glob **/*.yaml`
 
       - run:
           name: Run tests
