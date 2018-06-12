@@ -21,7 +21,7 @@ def roundTrip(path):
             with io.open(path, 'w', encoding='utf8') as f:
                 yaml.dump(data, f)
         except Exception as e:
-        	raise e
+            raise e
 
 
 if __name__ == "__main__":
