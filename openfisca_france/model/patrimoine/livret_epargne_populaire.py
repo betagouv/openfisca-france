@@ -67,6 +67,6 @@ class livret_epargne_populaire_taux(Variable):
         eligibilite = individu('livret_epargne_populaire_eligibilite', period)
 
         epargne = parameters(period).epargne
-        base_livret_a = epargne.livret_a.taux 
+        base_livret_a = epargne.livret_a.taux
         majoration = epargne.livret_epargne_populaire.majoration_base_livret_a
         return 100 * eligibilite * (base_livret_a + majoration)
