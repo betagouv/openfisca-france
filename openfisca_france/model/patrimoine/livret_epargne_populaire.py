@@ -15,7 +15,7 @@ class livret_epargne_populaire_plafond(Variable):
         ]
 
     def formula(individu, period, parameters):
-        params = parameters(period).livret_epargne_populaire
+        params = parameters(period).epargne.livret_epargne_populaire
         p_metropole = params.baremes.metropole
         p_mgr = params.baremes.martinique_guadeloupe_la_reunion
         p_guyane = params.baremes.guyane
@@ -55,3 +55,18 @@ class livret_epargne_populaire_eligibilite(Variable):
         plafond = individu('livret_epargne_populaire_plafond', period)
 
         return rfr <= plafond
+
+
+class livret_epargne_populaire_taux(Variable):
+    value_type = float
+    entity = Individu
+    label = u"Eligibilité au livret d'épargne populaire"
+    definition_period = MONTH
+
+    def formula(individu, period, parameters):
+        eligibilite = individu('livret_epargne_populaire_eligibilite', period)
+
+        epargne = parameters(period).epargne
+        base_livret_a = epargne.livret_a.taux 
+        majoration = epargne.livret_epargne_populaire.majoration_base_livret_a
+        return 100 * eligibilite * (base_livret_a + majoration)
